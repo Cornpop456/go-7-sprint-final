@@ -76,13 +76,14 @@ func TestCafeCount(t *testing.T) {
 
 		handler.ServeHTTP(response, req)
 
+		require.Equal(t, wantedStatus, response.Code)
+
 		cities := strings.Split(strings.TrimSpace(response.Body.String()), ",")
 
 		if cities[0] == "" {
 			cities = cities[1:]
 		}
 
-		require.Equal(t, wantedStatus, response.Code)
 		assert.Equal(t, v.want, len(cities))
 	}
 }
@@ -107,13 +108,13 @@ func TestCafeSearch(t *testing.T) {
 
 		handler.ServeHTTP(response, req)
 
+		require.Equal(t, wantedStatus, response.Code)
+
 		cities := strings.Split(strings.TrimSpace(response.Body.String()), ",")
 
 		if cities[0] == "" {
 			cities = cities[1:]
 		}
-
-		require.Equal(t, wantedStatus, response.Code)
 
 		for _, city := range cities {
 			assert.True(t, strings.Contains(strings.ToLower(city), strings.ToLower(v.search)))
